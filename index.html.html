@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Alisa — Full Stack Developer & Designer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,450;0,9..144,600;1,9..144,450&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #090b10;
+    --panel: #10131c;
+    --panel-line: rgba(255,255,255,0.08);
+    --paper: #e9e6df;
+    --paper-dim: #a9a6a0;
+    --brass: #c9a25b;
+    --brass-soft: rgba(201,162,91,0.16);
+    --serif: 'Fraunces', serif;
+    --sans: 'Manrope', sans-serif;
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  * { box-sizing: inherit; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; scroll-padding-top: env(safe-area-inset-top, 0px); }
+  html, body { background: var(--ink); }
+  body {
+    font-family: var(--sans);
+    color: var(--paper);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  a { color: inherit; }
+  img { max-width: 100%; display: block; }
+
+  ::selection { background: var(--brass-soft); color: var(--paper); }
+
+  /* subtle backdrop texture */
+  body::before {
+    content: "";
+    position: fixed; inset: 0;
+    background:
+      radial-gradient(ellipse 900px 500px at 12% -10%, rgba(201,162,91,0.10), transparent 60%),
+      radial-gradient(ellipse 700px 500px at 100% 10%, rgba(120,140,170,0.07), transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 32px; }
+  @media (max-width: 640px) { .wrap { padding: 0 20px; } }
+
+  /* ---------- Nav ---------- */
+  header {
+    position: sticky; top: 0; z-index: 40;
+    padding-top: env(safe-area-inset-top, 0px);
+    backdrop-filter: blur(14px);
+    background: rgba(9,11,16,0.72);
+    border-bottom: 1px solid var(--panel-line);
+  }
+  .nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 0;
+  }
+  .nav-mark {
+    font-family: var(--serif); font-weight: 450; font-size: 1.15rem;
+    letter-spacing: 0.01em;
+  }
+  .nav-links { display: flex; gap: 32px; font-size: 0.88rem; color: var(--paper-dim); }
+  .nav-links a { text-decoration: none; transition: color .25s ease; }
+  .nav-links a:hover, .nav-links a:focus-visible { color: var(--paper); }
+  .nav-cta {
+    font-size: 0.85rem; color: var(--ink); background: var(--brass);
+    padding: 9px 18px; border-radius: 3px; text-decoration: none;
+    font-weight: 600; transition: transform .25s ease, filter .25s ease;
+  }
+  .nav-cta:hover { filter: brightness(1.08); transform: translateY(-1px); }
+  @media (max-width: 720px) { .nav-links { display: none; } }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    position: relative; z-index: 1;
+    padding: 108px 0 96px;
+    border-bottom: 1px solid var(--panel-line);
+  }
+  .hero-eyebrow {
+    font-size: 0.85rem; color: var(--brass); font-weight: 600;
+    margin-bottom: 22px; opacity: 0; animation: rise .8s ease forwards;
+  }
+  .hero h1 {
+    font-family: var(--serif); font-weight: 450;
+    font-size: clamp(2.6rem, 6vw, 4.6rem);
+    line-height: 1.04; letter-spacing: -0.01em;
+    max-width: 15ch;
+    opacity: 0; animation: rise .9s ease .12s forwards;
+  }
+  .hero h1 em {
+    font-style: italic; color: var(--brass); font-weight: 450;
+  }
+  .hero-sub {
+    margin-top: 26px; font-size: 1.08rem; color: var(--paper-dim);
+    max-width: 46ch; line-height: 1.7;
+    opacity: 0; animation: rise .9s ease .24s forwards;
+  }
+  .hero-meta {
+    margin-top: 40px; display: flex; flex-wrap: wrap; gap: 12px;
+    opacity: 0; animation: rise .9s ease .36s forwards;
+  }
+  .pill {
+    font-size: 0.82rem; padding: 7px 14px; border: 1px solid var(--panel-line);
+    border-radius: 999px; color: var(--paper-dim); background: rgba(255,255,255,0.02);
+  }
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-eyebrow, .hero h1, .hero-sub, .hero-meta { animation: none; opacity: 1; }
+  }
+
+  /* ---------- Section shell ---------- */
+  section { position: relative; z-index: 1; padding: 88px 0; border-bottom: 1px solid var(--panel-line); }
+  .section-head { display: flex; align-items: baseline; justify-content: space-between; gap: 24px; margin-bottom: 52px; }
+  .section-head h2 {
+    font-family: var(--serif); font-weight: 450; font-size: clamp(1.7rem, 3vw, 2.3rem);
+  }
+  .section-head p { color: var(--paper-dim); font-size: 0.92rem; max-width: 30ch; text-align: right; }
+  @media (max-width: 640px) { .section-head { flex-direction: column; } .section-head p { text-align: left; } }
+
+  /* ---------- About / stack ---------- */
+  .about-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 64px; }
+  @media (max-width: 800px) { .about-grid { grid-template-columns: 1fr; gap: 40px; } }
+  .about-copy p { color: var(--paper-dim); font-size: 1.02rem; margin-bottom: 18px; max-width: 52ch; }
+  .about-copy strong { color: var(--paper); font-weight: 600; }
+
+  .stack-block h3 {
+    font-size: 0.78rem; text-transform: none; color: var(--brass);
+    font-weight: 700; letter-spacing: 0.02em; margin-bottom: 14px;
+  }
+  .tag-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 30px; }
+  .tag {
+    font-size: 0.82rem; padding: 6px 12px; border-radius: 4px;
+    background: var(--panel); border: 1px solid var(--panel-line); color: var(--paper);
+  }
+  .lang-row { display: flex; flex-wrap: wrap; gap: 20px; color: var(--paper-dim); font-size: 0.92rem; }
+  .lang-row b { color: var(--paper); font-weight: 600; }
+
+  /* ---------- Work index ---------- */
+  .work-item {
+    display: grid; grid-template-columns: 1fr auto; align-items: start;
+    gap: 24px; padding: 30px 0; border-top: 1px solid var(--panel-line);
+    text-decoration: none; color: inherit; cursor: default;
+  }
+  .work-item:first-of-type { border-top: 1px solid var(--panel-line); }
+  .work-title-row { display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; }
+  .work-title {
+    font-family: var(--serif); font-weight: 450; font-size: 1.5rem;
+    transition: color .25s ease;
+  }
+  .work-item:hover .work-title { color: var(--brass); }
+  .work-cat { font-size: 0.78rem; color: var(--paper-dim); border: 1px solid var(--panel-line); padding: 3px 10px; border-radius: 999px; }
+  .work-desc { color: var(--paper-dim); font-size: 0.95rem; margin-top: 10px; max-width: 62ch; }
+  .work-stack { color: var(--brass); font-size: 0.82rem; margin-top: 12px; font-weight: 600; }
+  .work-arrow { font-family: var(--serif); font-size: 1.4rem; color: var(--paper-dim); align-self: center; transition: transform .25s ease, color .25s ease; }
+  .work-item:hover .work-arrow { transform: translateX(4px); color: var(--brass); }
+  @media (max-width: 640px) { .work-arrow { display: none; } }
+
+  /* ---------- Process ---------- */
+  .process-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--panel-line); border: 1px solid var(--panel-line); }
+  @media (max-width: 800px) { .process-grid { grid-template-columns: 1fr; } }
+  .process-cell { background: var(--ink); padding: 32px 28px; }
+  .process-cell h3 { font-family: var(--serif); font-weight: 450; font-size: 1.2rem; margin-bottom: 10px; }
+  .process-cell p { color: var(--paper-dim); font-size: 0.92rem; }
+
+  /* ---------- Contact ---------- */
+  .contact { text-align: left; }
+  .contact h2 {
+    font-family: var(--serif); font-weight: 450;
+    font-size: clamp(2rem, 5vw, 3.2rem); max-width: 16ch; line-height: 1.08;
+  }
+  .contact-sub { color: var(--paper-dim); margin-top: 18px; max-width: 48ch; font-size: 1.02rem; }
+  .contact-row { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 36px; }
+  .btn-primary {
+    background: var(--brass); color: var(--ink); font-weight: 600; font-size: 0.95rem;
+    padding: 14px 26px; border-radius: 3px; text-decoration: none;
+    transition: transform .25s ease, filter .25s ease;
+  }
+  .btn-primary:hover { filter: brightness(1.08); transform: translateY(-1px); }
+  .btn-ghost {
+    border: 1px solid var(--panel-line); color: var(--paper); font-size: 0.95rem;
+    padding: 14px 26px; border-radius: 3px; text-decoration: none;
+    transition: border-color .25s ease, background .25s ease;
+  }
+  .btn-ghost:hover { border-color: var(--brass); background: rgba(201,162,91,0.06); }
+
+  footer { padding: 36px 0; }
+  .foot-row { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; color: var(--paper-dim); font-size: 0.82rem; }
+  .foot-row a { text-decoration: none; color: var(--paper-dim); transition: color .2s ease; }
+  .foot-row a:hover { color: var(--brass); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <div class="nav-mark">Alisa</div>
+    <nav class="nav-links">
+      <a href="#work">Work</a>
+      <a href="#about">About</a>
+      <a href="#process">Process</a>
+    </nav>
+    <a class="nav-cta" href="#contact">Start a project</a>
+  </div>
+</header>
+
+<section class="hero wrap" style="border-bottom:none;">
+  <div class="hero-eyebrow">Full&nbsp;Stack&nbsp;Developer&nbsp;&amp;&nbsp;Designer</div>
+  <h1>I build sites and tools that feel <em>considered</em>, not templated.</h1>
+  <p class="hero-sub">
+    I design and build production-ready websites, dashboards, and small applications —
+    from WordPress/WooCommerce stores to full-stack tools — for businesses that want
+    their site to actually look like it was made for them.
+  </p>
+  <div class="hero-meta">
+    <span class="pill">Based in Pakistan</span>
+    <span class="pill">Available remote</span>
+    <span class="pill">English · Swedish · Urdu</span>
+  </div>
+</section>
+
+<section id="about" class="wrap">
+  <div class="section-head">
+    <h2>About</h2>
+    <p>Web development background, applied across e-commerce, dashboards, and product design.</p>
+  </div>
+  <div class="about-grid">
+    <div class="about-copy">
+      <p>
+        I'm a web developer and designer working across full-stack builds, WordPress/WooCommerce
+        stores, and interface design. I trained in web development in Sweden, and I currently work
+        as a Junior Full Stack Developer at <strong>CodexAnalytics</strong>, alongside freelance
+        and independent projects.
+      </p>
+      <p>
+        My work spans building operations tools for live e-commerce stores, converting static
+        sites into full custom WordPress themes, and designing interfaces that hold up against
+        the SaaS products they're competing with — not generic templates.
+      </p>
+    </div>
+    <div class="stack-block">
+      <h3>Stack</h3>
+      <div class="tag-row">
+        <span class="tag">HTML / CSS / JS</span>
+        <span class="tag">TypeScript</span>
+        <span class="tag">React</span>
+        <span class="tag">WordPress</span>
+        <span class="tag">WooCommerce</span>
+        <span class="tag">Python</span>
+        <span class="tag">FastAPI</span>
+        <span class="tag">Flask</span>
+        <span class="tag">AWS</span>
+        <span class="tag">Figma</span>
+      </div>
+      <h3>Languages</h3>
+      <div class="lang-row">
+        <span><b>English</b> — fluent</span>
+        <span><b>Swedish</b> — fluent</span>
+        <span><b>Urdu</b> — fluent</span>
+        <span><b>Norwegian / Turkish</b> — comprehension</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="work" class="wrap">
+  <div class="section-head">
+    <h2>Selected work</h2>
+    <p>A mix of live client work, product builds, and design-led projects.</p>
+  </div>
+
+  <div class="work-list">
+    <div class="work-item">
+      <div>
+        <div class="work-title-row">
+          <span class="work-title">Cuddle Baby Wear — Operations Dashboard</span>
+          <span class="work-cat">WordPress plugin</span>
+        </div>
+        <p class="work-desc">
+          Custom WordPress admin plugin built for a live WooCommerce store, handling order
+          operations, customer resolution, and reporting — including HPOS compatibility and
+          timezone-safe query handling.
+        </p>
+        <div class="work-stack">WordPress · WooCommerce · PHP · MySQL</div>
+      </div>
+      <div class="work-arrow">→</div>
+    </div>
+
+    <div class="work-item">
+      <div>
+        <div class="work-title-row">
+          <span class="work-title">CodeExAnalytics — Site &amp; Theme</span>
+          <span class="work-cat">Full theme build</span>
+        </div>
+        <p class="work-desc">
+          Converted a static HTML site into a complete custom WordPress theme with custom post
+          types, an AJAX contact form, and Customizer panels — plus a premium redesign of the
+          Web &amp; API Development service page, benchmarked against Linear, Stripe, and Vercel.
+        </p>
+        <div class="work-stack">WordPress · PHP · JavaScript · UX design</div>
+      </div>
+      <div class="work-arrow">→</div>
+    </div>
+
+    <div class="work-item">
+      <div>
+        <div class="work-title-row">
+          <span class="work-title">CyberShield</span>
+          <span class="work-cat">Full-stack app</span>
+        </div>
+        <p class="work-desc">
+          A cyber attack detection dashboard with a Python/Flask backend, SQLite storage, and a
+          browser-based frontend for monitoring and reviewing detected threats.
+        </p>
+        <div class="work-stack">Python · Flask · SQLite</div>
+      </div>
+      <div class="work-arrow">→</div>
+    </div>
+
+    <div class="work-item">
+      <div>
+        <div class="work-title-row">
+          <span class="work-title">L'Écrin</span>
+          <span class="work-cat">Design-led static site</span>
+        </div>
+        <p class="work-desc">
+          A luxury salon website built with an editorial, premium visual identity — one of a
+          series of self-contained, production-ready static builds spanning healthcare, retail,
+          and hospitality.
+        </p>
+        <div class="work-stack">HTML · CSS · JavaScript</div>
+      </div>
+      <div class="work-arrow">→</div>
+    </div>
+
+    <div class="work-item">
+      <div>
+        <div class="work-title-row">
+          <span class="work-title">Annota Health</span>
+          <span class="work-cat">Product design</span>
+        </div>
+        <p class="work-desc">
+          A healthcare document translation platform concept, designed with a restrained
+          enterprise SaaS aesthetic rather than decorative excess — built for clarity under
+          clinical use.
+        </p>
+        <div class="work-stack">Product design · Frontend</div>
+      </div>
+      <div class="work-arrow">→</div>
+    </div>
+
+    <div class="work-item">
+      <div>
+        <div class="work-title-row">
+          <span class="work-title">Ice Cube Merge</span>
+          <span class="work-cat">Snapchat Lens · Game</span>
+        </div>
+        <p class="work-desc">
+          A 2048-style swipe merge puzzle game built and published as a Snapchat Lens, currently
+          growing toward Snap's Lens+ creator payout threshold.
+        </p>
+        <div class="work-stack">Lens Studio · Game logic</div>
+      </div>
+      <div class="work-arrow">→</div>
+    </div>
+  </div>
+</section>
+
+<section id="process" class="wrap">
+  <div class="section-head">
+    <h2>How I work</h2>
+    <p>Small, well-scoped engagements — most work delivered in days, not weeks.</p>
+  </div>
+  <div class="process-grid">
+    <div class="process-cell">
+      <h3>Scope first</h3>
+      <p>Before any code, I confirm exactly what "done" looks like — so there's no ambiguity about what you're paying for.</p>
+    </div>
+    <div class="process-cell">
+      <h3>Build in the open</h3>
+      <p>You see progress as it happens, not just a final reveal. Fixes and feedback are folded in as we go.</p>
+    </div>
+    <div class="process-cell">
+      <h3>Fast turnaround</h3>
+      <p>Most fixes and small builds are delivered within 24–72 hours of scope being agreed.</p>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="wrap contact" style="border-bottom:none;">
+  <h2>Have a site that needs fixing, or an idea worth building?</h2>
+  <p class="contact-sub">
+    I take on WordPress/WooCommerce fixes, small full-stack builds, and design-led static sites.
+    Tell me what you're working on and I'll reply with an honest read on scope and timeline.
+  </p>
+  <div class="contact-row">
+    <a class="btn-primary" href="mailto:your@email.com">Email me</a>
+    <a class="btn-ghost" href="#">LinkedIn</a>
+    <a class="btn-ghost" href="#">GitHub</a>
+  </div>
+</section>
+
+<footer class="wrap">
+  <div class="foot-row">
+    <span>Alisa — Full Stack Developer &amp; Designer</span>
+    <span>Based in Pakistan · Open to remote work</span>
+  </div>
+</footer>
+
+</body>
+</html>
